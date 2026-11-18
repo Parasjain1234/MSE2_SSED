@@ -30,12 +30,12 @@ services:
       - taskflow-network
 
   backend:
-    image: ${DOCKERHUB_USERNAME:-parasjain1234}/taskflow-backend:latest
+    image: ${DOCKERHUB_USERNAME:-paras0201}/taskflow-backend:latest
     environment:
       PORT: 3000
-      DATABASE_URL: ${DATABASE_URL:-postgresql://taskflow_user:change_this_db_password@postgres:5432/taskflow}
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-      JWT_SECRET: ${JWT_SECRET:-replace_with_a_long_random_secret}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
     depends_on:
       postgres:
         condition: service_healthy
@@ -47,7 +47,7 @@ services:
       - taskflow-network
 
   frontend:
-    image: ${DOCKERHUB_USERNAME:-parasjain1234}/taskflow-frontend:latest
+    image: ${DOCKERHUB_USERNAME:-paras0201}/taskflow-frontend:latest
     depends_on:
       backend:
         condition: service_healthy
